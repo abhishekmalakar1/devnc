@@ -3,6 +3,6 @@
   become: yes
   tasks:
     - copy:
-        src: ~/check.sh
+        src: /var/lib/jenkins/workspace/pipeline-job-1/check.sh
         dest: /tmp/
     - command: sh /tmp/check.sh
