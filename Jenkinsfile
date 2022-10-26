@@ -37,6 +37,11 @@ pipeline{
                 }
             }
         }
-
+        
+        stage('copy artifacts'){
+            steps{
+                copyArtifacts filter: 'folder1/*', fingerprintArtifacts: true, projectName: 'pipeline-job-1'
+            }
+        }
     }
 }
