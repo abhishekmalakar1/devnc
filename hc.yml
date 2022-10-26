@@ -6,5 +6,5 @@
         src: /var/lib/jenkins/workspace/pipeline-job-1/check.sh
         dest: /tmp/
     - command: sh /tmp/check.sh
-    - command: sh /tmp/check.sh
-        delegate_to: 127.0.0.1
+    #- command: sh /tmp/check.sh
+     #   delegate_to: 127.0.0.1
