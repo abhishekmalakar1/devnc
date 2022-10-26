@@ -28,6 +28,14 @@ pipeline{
                 echo 'deploying the app'
             }
         }
+        
+        stage('run play'){
+            steps{
+                script{
+                    def playjob = build job: 'pipeline-job-1'
+                }
+            }
+        }
 
     }
 }
