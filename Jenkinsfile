@@ -1,3 +1,4 @@
+currentBuild.displayName = "declarative-pipeline-job1-#"+currentBuild.number
 pipeline{
     agent any
     parameters{
