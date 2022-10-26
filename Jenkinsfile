@@ -5,7 +5,7 @@ pipeline{
         choice(name: 'ENV', choices: ['UAT', 'DEV', 'TEST', 'PPT'], description: '')
         choice(name: 'version', choices: ['1.1.0', '1.1.1', '1.1.2'], description: '')
         booleanParam(name: 'executeTest', defaultValue: true, description: '')
-        string(name: 'expName', defaultValue: '', description: 'enter exporter name')
+        string(name: 'expName', defaultValue: 'JMX', description: 'enter exporter name')
     }
     stages{
         stage('build'){
@@ -34,9 +34,10 @@ pipeline{
         stage('run play'){
             steps{
                 
-                //    build job: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
+                // build job: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
+                script {
                 def job = build job: 'pipeline-job-1', parameters: [[$class: 'StringParameterValue', name: 'expName', value: "${params.expName}"]]
-                
+                }
             }
         }
         
