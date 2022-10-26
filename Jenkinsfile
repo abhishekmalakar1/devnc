@@ -33,9 +33,9 @@ pipeline{
         
         stage('run play'){
             steps{
-                script{
-                    def playjob = build job: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
-                }
+                
+                    build job: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
+                
             }
         }
         
