@@ -12,12 +12,12 @@ pipeline{
             }
         }
         stage('test'){
-            steps{
-                when{
+            when{
                     expression{
                         params.executeTest == true
                     }
                 }
+            steps{
                 echo 'testing the app'
             }
         }
