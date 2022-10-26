@@ -1,18 +1,17 @@
-currentBuild.displayName = "multiBranch-job1-#"+currentBuild.number
 pipeline{
     agent any
     stages{
         stage('build'){
             steps{
-                cleanWs()
-                echo 'building'
+              
+                echo 'building the app'
                 
                 
             }
         }
         stage('test'){
             steps{
-                echo 'testing'
+                echo 'testing the app'
                 
                 
                 }
@@ -20,7 +19,7 @@ pipeline{
         }
         stage('deploy'){
             steps{
-              echo 'deploying'
+              echo 'deploying the app'
               
             }
         }
