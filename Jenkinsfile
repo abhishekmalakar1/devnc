@@ -34,14 +34,14 @@ pipeline{
         stage('run play'){
             steps{
                 script{
-                    def playjob = build job: 'pipeline-job-1'
+                    def playjob = build job: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
                 }
             }
         }
         
         stage('copy artifacts'){
             steps{
-                copyArtifacts filter: 'report*', fingerprintArtifacts: true, projectName: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
+                copyArtifacts filter: 'report*', fingerprintArtifacts: true, projectName: 'pipeline-job-1'
             }
         }
     }
