@@ -10,6 +10,7 @@ pipeline{
     stages{
         stage('build'){
             steps{
+                cleanWs()
                 echo 'building the app'
             }
         }
