@@ -46,7 +46,8 @@ pipeline{
         
         stage('copy artifacts'){
             steps{
-                copyArtifacts filter: 'report*', fingerprintArtifacts: true, projectName: 'pipeline-job-1'
+                //copyArtifacts filter: 'report*', fingerprintArtifacts: true, projectName: 'pipeline-job-1'
+                copyArtifacts fingerprintArtifacts: true, projectName: 'pipeline-job-1'
             }
         }
     }
