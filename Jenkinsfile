@@ -38,8 +38,8 @@ pipeline{
                     // def job = build job: 'pipeline-job-1', parameters: [[$class: 'StringParameterValue', name: 'expName', value: "${params.expName}"], [$class: 'ChoiceParameterValue', name: 'version', value: "${params.version}"]]
                     build job: 'pipeline-job-1', parameters: [
                     string(name: 'expName', value: "${params.expName}"),
-                    string(name: 'version', value: "${params.version}")]
-                    
+                    string(name: 'ver', value: "${params.version}"),
+                    string(name: 'environment', value: "${params.ENV}"]
                 }
             }
         }
