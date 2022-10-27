@@ -49,6 +49,7 @@ pipeline{
             steps{
                 //copyArtifacts filter: 'report*', fingerprintArtifacts: true, projectName: 'pipeline-job-1'
                 copyArtifacts fingerprintArtifacts: true, projectName: 'pipeline-job-1'
+                archiveArtifacts artifacts: '*', followSymlinks: false, onlyIfSuccessful: true
             }
         }
     }
