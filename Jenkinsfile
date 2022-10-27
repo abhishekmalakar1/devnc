@@ -39,7 +39,7 @@ pipeline{
                     build job: 'pipeline-job-1', parameters: [
                     string(name: 'expName', value: "${params.expName}"),
                     string(name: 'ver', value: "${params.version}"),
-                    string(name: 'environment', value: "${params.ENV}"]
+                    string(name: 'environment', value: "${params.ENV}")]
                 }
             }
         }
