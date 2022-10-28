@@ -42,10 +42,15 @@ pipeline{
             }    
         }
         stage('copy artifacts'){
+            when{   expression{ params.healthCheck == true}}
             steps{
                 copyArtifacts fingerprintArtifacts: true, projectName: 'health-check-job'
+            }
+            when{   expression{ params.httpdInstall == true}}
+            steps{
                 copyArtifacts fingerprintArtifacts: true, projectName: 'httpd-install-job'
-                archiveArtifacts artifacts: "*.txt", followSymlinks: false, onlyIfSuccessful: true
+            }
+                archiveArtifacts artifacts: "*", followSymlinks: false, onlyIfSuccessful: true
             }
         }
     }
