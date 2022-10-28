@@ -13,7 +13,12 @@ pipeline{
                 
             }
         }
-        stage('run play'){
+        stage('HC Play'){
+            when{
+                expression{
+                    params.healthCheck == true
+                }
+            }
             steps{
                     // build job: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
                 script {
@@ -23,6 +28,15 @@ pipeline{
                 }
             }
         }
-        
+        stage('httpd Play'){
+                when{
+                expression{
+                    params.httpdInstall == true
+                }
+            }
+            steps{
+                echo "install-httpd-playbook si running"
+            }    
+        }
     }
 }
