@@ -51,7 +51,6 @@ pipeline{
                 copyArtifacts fingerprintArtifacts: true, projectName: 'httpd-install-job'
             }
                 archiveArtifacts artifacts: "*", followSymlinks: false, onlyIfSuccessful: true
-            }
         }
     }
 }
