@@ -41,5 +41,12 @@ pipeline{
                 }
             }    
         }
+        stage('copy artifacts'){
+            steps{
+                copyArtifacts fingerprintArtifacts: true, projectName: 'health-check-job'
+                copyArtifacts fingerprintArtifacts: true, projectName: 'httpd-install-job'
+                archiveArtifacts artifacts: '*', followSymlinks: false, onlyIfSuccessful: true
+            }
+        }
     }
 }
