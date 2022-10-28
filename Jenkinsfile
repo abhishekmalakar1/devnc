@@ -1,4 +1,4 @@
-currentBuild.displayName = "declarative-pipeline-job1-#"+currentBuild.number
+currentBuild.displayName = "ansible-main-job-#"+currentBuild.number
 pipeline{
     agent any
     parameters{
@@ -18,7 +18,7 @@ pipeline{
                     // build job: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
                 script {
                     // def job = build job: 'pipeline-job-1', parameters: [[$class: 'StringParameterValue', name: 'expName', value: "${params.expName}"], [$class: 'ChoiceParameterValue', name: 'version', value: "${params.version}"]]
-                    build job: 'health-check-job', parameters: [booleanParam(name: 'parameter_name', value: "${params.healthCheck}")]
+                    build job: 'health-check-job', parameters: [booleanParam(name: 'healthCheck', value: "${params.healthCheck}")]
                 }
             }
         }
