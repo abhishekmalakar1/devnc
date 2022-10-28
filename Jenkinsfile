@@ -7,28 +7,27 @@ pipeline{
         booleanParam(name: 'httpdInstall', defaultValue: false, description: '')
     }
     stages{
-        stage('clean WS'){
+        stage('CLEAN WS'){
             steps{
                 cleanWs()
                 
             }
         }
-        stage('HC Play'){
+        stage('HC PLAY'){
             when{
                 expression{
                     params.healthCheck == true
                 }
             }
             steps{
-                    // build job: 'pipeline-job-1', parameters: [choice(name: 'version', value: "${params.version}"), string(name: 'expName', value: "${params.expName}")]
                 script {
-                    // def job = build job: 'pipeline-job-1', parameters: [[$class: 'StringParameterValue', name: 'expName', value: "${params.expName}"], [$class: 'ChoiceParameterValue', name: 'version', value: "${params.version}"]]
                     build job: 'health-check-job', parameters: [
                         booleanParam(name: 'healthCheck', value: "${params.healthCheck}")]
                 }
+                copyArtifacts fingerprintArtifacts: true, projectName: 'health-check-job'
             }
         }
-        stage('httpd Play'){
+        stage('HTTPD PLAY'){
                 when{
                 expression{
                     params.httpdInstall == true
@@ -42,16 +41,10 @@ pipeline{
                 copyArtifacts fingerprintArtifacts: true, projectName: 'httpd-install-job'
             }    
         }
-        stage('copy artifacts'){
-//             when{   expression{ params.healthCheck == true}}
-             steps{
-//                 copyArtifacts fingerprintArtifacts: true, projectName: 'health-check-job'
-//             }
-//             when{   expression{ params.httpdInstall == true}}
-//             steps{
-//                 copyArtifacts fingerprintArtifacts: true, projectName: 'httpd-install-job'
-//             }
-                 archiveArtifacts artifacts: "*", followSymlinks: false, onlyIfSuccessful: true }
+        stage('COPY ARTIFACTS'){
+            steps{
+                 archiveArtifacts artifacts: "*", followSymlinks: false, onlyIfSuccessful: true 
+            }
         }
     }
 }
