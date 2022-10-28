@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - copy:
+        src: /var/lib/jenkins/workspace/health-check-job/check.sh
+        dest: /tmp/
+    - command: sh /tmp/health-check.sh
+    
