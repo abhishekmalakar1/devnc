@@ -3,7 +3,7 @@ pipeline{
     agent any
     parameters{
        // choice(name: 'ENV', choices: ['UAT', 'DEV', 'TEST', 'PPT'], description: '')
-        booleanParam(name: 'healthCheck', defaultValue: true, description: '')
+        booleanParam(name: 'healthCheck', defaultValue: false, description: '')
         booleanParam(name: 'httpdInstall', defaultValue: false, description: '')
     }
     stages{
@@ -35,7 +35,10 @@ pipeline{
                 }
             }
             steps{
-                echo "install-httpd-playbook si running"
+                script {
+                    build job: 'httpd-install-job', parameters: [
+                        booleanParam(name: 'httpdInstall', value: "${params.httpdInstall}")]
+                }
             }    
         }
     }
