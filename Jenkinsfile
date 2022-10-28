@@ -38,20 +38,20 @@ pipeline{
                 script {
                     build job: 'httpd-install-job', parameters: [
                         booleanParam(name: 'httpdInstall', value: "${params.httpdInstall}")]
-                    copyArtifacts fingerprintArtifacts: true, projectName: 'httpd-install-job'
                 }
+                copyArtifacts fingerprintArtifacts: true, projectName: 'httpd-install-job'
             }    
         }
         stage('copy artifacts'){
 //             when{   expression{ params.healthCheck == true}}
-//             steps{
+             steps{
 //                 copyArtifacts fingerprintArtifacts: true, projectName: 'health-check-job'
 //             }
 //             when{   expression{ params.httpdInstall == true}}
 //             steps{
 //                 copyArtifacts fingerprintArtifacts: true, projectName: 'httpd-install-job'
 //             }
-                archiveArtifacts artifacts: "*", followSymlinks: false, onlyIfSuccessful: true
+                 archiveArtifacts artifacts: "*", followSymlinks: false, onlyIfSuccessful: true }
         }
     }
 }
