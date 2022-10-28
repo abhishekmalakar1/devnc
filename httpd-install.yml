@@ -1,0 +1,12 @@
+---
+- name: install httpd apache web server
+  hosts: all
+  gather_facts: false
+  become: yes
+  tasks:
+    - yum:
+       name: httpd
+       state: latest
+    - service:
+       name: httpd
+       state: started
