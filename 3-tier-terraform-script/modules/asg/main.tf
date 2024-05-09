@@ -3,6 +3,7 @@ provider "aws" {
 }
 
 resource "aws_launch_configuration" "lc" {
+  count = 5
   name = "frontend-lc"
   image_id = "ami-123abc"
   instance_type = "t2.large"
@@ -16,4 +17,12 @@ resource "aws_autoscaling_group" "asg" {
   max_size = 5
   desired_capacity = 3
   vpc_zone_identifier = [ aws_subnet.frontend_subnet.id, aws_subnet.backend_subnet.id, aws_subnet.database_subnet.id ]
+}
+
+resource "aws_instace" ""{
+count = 10
+tags = {
+  name = "instance-${count.index} + 1"
+}
+
 }
