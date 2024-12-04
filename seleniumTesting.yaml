@@ -1,0 +1,77 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+jobs:
+  # Job 1: Install dependencies and build the .NET application
+  - job: Build
+    displayName: 'Build .NET Application'
+    steps:
+      - task: UseDotNet@2
+        inputs:
+          packageType: 'sdk'
+          version: '7.x' # Adjust to your .NET version (e.g., 7.x, 6.x)
+          installationPath: $(Agent.ToolsDirectory)/dotnet
+
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'restore'
+          projects: '**/*.csproj'
+
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: '**/*.csproj'
+          arguments: '--configuration Release'
+
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'publish'
+          projects: '**/*.csproj'
+          arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+
+  # Job 2: Run unit tests
+  - job: UnitTests
+    displayName: 'Run Unit Tests'
+    dependsOn: Build
+    steps:
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          projects: '**/*.csproj'
+          arguments: '--configuration Release'
+
+  # Job 3: Run Selenium tests (UI/Integration tests)
+  - job: SeleniumTests
+    displayName: 'Run Selenium Tests'
+    dependsOn: Build
+    steps:
+      - task: UseDotNet@2
+        inputs:
+          packageType: 'sdk'
+          version: '7.x' # Adjust if needed
+          installationPath: $(Agent.ToolsDirectory)/dotnet
+
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          buildType: 'specific'
+          project: $(System.TeamProject)
+          definition: $(Build.DefinitionName)
+          buildId: $(Build.BuildId)
+          downloadPath: $(Build.ArtifactStagingDirectory)
+
+      - task: SeleniumStandaloneServer@1
+        inputs:
+          seleniumVersion: '3.x' # You can use any appropriate Selenium version
+          driverVersion: 'latest' # This may be specific to the browser being used (e.g., Chrome, Firefox)
+
+      - script: |
+          # Run Selenium tests using your preferred browser (e.g., Chrome)
+          # Example for running with ChromeDriver
+          dotnet test --filter SeleniumTests --configuration Release
+        displayName: 'Run Selenium Tests'
+        
